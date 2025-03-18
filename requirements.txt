@@ -1,0 +1,7 @@
+discord.py
+pyautogui
+psutil
+requests
+sounddevice
+scipy
+pywin32
