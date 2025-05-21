@@ -1,4 +1,4 @@
-import win32com
+import win32com.client
 import os
 
 def create_shortcut(target_path, shortcut_path, description=""):

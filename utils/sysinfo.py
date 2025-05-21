@@ -17,6 +17,8 @@ class SystemInfo:
             "RAM": self.get_ram_info(),
             "Disk": self.get_disk_info()
         }
+        self.ip_address = self.get_ip_address()
+        self.cpu_info = self.get_cpu_info()
 
     def get_ip_address(self):
         try:
