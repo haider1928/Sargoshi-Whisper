@@ -4,3 +4,8 @@ main.build
 /__pycache__
 *.pyc
 pyproject.toml
+/build
+/dist
+upx.exe
+plans.txt
+vap-2-windows.spec
