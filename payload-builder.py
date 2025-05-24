@@ -28,20 +28,25 @@ except subprocess.CalledProcessError as e:
 
 name_file = input(f"{Fore.YELLOW}[*] Enter the name of the payload file (without .exe): {Style.RESET_ALL}").replace(" ", "_")
 
-# Prompt to change the Discord token
 wanna_change_token = input(f"{Fore.YELLOW}[*] Do you want to change the Discord bot token? (y/n): {Style.RESET_ALL}").strip().lower()
 discord_token = None
 if wanna_change_token == 'y':
     discord_token = input(f"{Fore.YELLOW}[*] Enter your new Discord bot token: {Style.RESET_ALL}").strip()
 
-# Prompt to change the Server ID
 wanna_change_server_id = input(f"{Fore.YELLOW}[*] Do you want to change the Server ID? (y/n): {Style.RESET_ALL}").strip().lower()
 server_id = None
 if wanna_change_server_id == 'y':
     server_id = input(f"{Fore.YELLOW}[*] Enter your new Server ID: {Style.RESET_ALL}").strip()
 
-# Update .env file
+# Ensure .env file exists
 env_file = os.path.join("engine", ".env")
+if not os.path.exists(env_file):
+    print(f"{Fore.YELLOW}[*] .env file not found. Creating a new one...{Style.RESET_ALL}")
+    with open(env_file, "w") as f:
+        f.write("DISCORD_TOKEN_VAPOUR=\n")
+        f.write("SERVER_ID=\n")
+    print(f"{Fore.GREEN}[*] .env file created successfully.{Style.RESET_ALL}")
+
 lines = []
 if os.path.exists(env_file):
     with open(env_file, "r") as file:
