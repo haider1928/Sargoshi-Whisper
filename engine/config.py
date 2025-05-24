@@ -6,7 +6,7 @@ TIME = now.strftime("%Y-%m-%d %H:%M:%S")
 VERSION = 'VAP~2'
 home_path = os.path.expanduser('~')
 target_file = rf"{os.getcwd()}\{(os.path.basename(__file__))}"
-shortcut_file = rf"{home_path}\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\vap-2-windows.lnk"
+shortcut_file = rf"{home_path}\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\{(os.path.basename(__file__))}.lnk"
 help_text = """
 **VAP2 HELP MENU**
 **COMMANDS**    **USAGE**

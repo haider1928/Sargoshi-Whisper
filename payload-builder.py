@@ -87,6 +87,7 @@ build_cmd = [
     "--onefile",
     "--noconsole",
     "-i", "ghost.ico",
+    "--add-data", "engine/.env;.",
     "-n", name_file,
     os.path.join("engine", "main.py")
 ]
