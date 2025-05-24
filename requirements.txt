@@ -5,3 +5,5 @@ requests
 sounddevice
 scipy
 pywin32
+pyinstaller
+colorama
