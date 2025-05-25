@@ -10,7 +10,9 @@
 **Sargoshi - Whisper** is a sophisticated payload generator that leverages **Python, PyInstaller, and the Discord API** to create **custom payload executables**. The project features an interactive setup process and ensures all sensitive information is configurable via an environment file (`engine/.env`).
 
 ---
-
+## Operating Systems
+**For payload generation** --> Any OS with python
+**Victim** --> Windows
 ## ⚙️ Prerequisites
 
 Before proceeding, ensure the following:
