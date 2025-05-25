@@ -5,8 +5,10 @@ now = datetime.datetime.now()
 TIME = now.strftime("%Y-%m-%d %H:%M:%S")
 VERSION = 'VAP~2'
 home_path = os.path.expanduser('~')
-target_file = rf"{os.getcwd()}\{(os.path.basename(__file__))}"
-shortcut_file = rf"{home_path}\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\{(os.path.basename(__file__))}.lnk"
+payload_name = None
+def fff(payload_name=payload_name):
+    print(f"[*] Payload name is: {payload_name}")
+          
 help_text = """
 **VAP2 HELP MENU**
 **COMMANDS**    **USAGE**

